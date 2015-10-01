@@ -18,32 +18,32 @@ class SimpleMarkovGenerator(object):
     def make_chains(self, corpus):
         """Takes input text as string; stores chains."""
 
-        # chains = {}
+        chains = {}
 
-        # words = corpus.split()
+        words = corpus.split()
 
-        # for i in range(len(words) - 2):
-        #     key = (words[i], words[i + 1])
-        #     value = words[i + 2]
+        for i in range(len(words) - 2):
+            key = (words[i], words[i + 1])
+            value = words[i + 2]
 
-        #     if key not in chains:
-        #         chains[key] = []
+            if key not in chains:
+                chains[key] = []
 
-        #     chains[key].append(value)
+            chains[key].append(value)
 
-        # return chains
+        return chains
 
-    def make_text(self):
+    def make_text(self, chains):
         """Takes dictionary of markov chains; returns random text."""
 
-        # key = choice(chains.keys())
-        # words = [key[0], key[1]]
-        # while key in chains:
-        #     word = choice(chains[key])
-        #     words.append(word)
-        #     key = (key[1], word)
+        key = choice(chains.keys())
+        words = [key[0], key[1]]
+        while key in chains:
+            word = choice(chains[key])
+            words.append(word)
+            key = (key[1], word)
 
-        # return " ".join(words)
+        return " ".join(words)
 
 
 if __name__ == "__main__":
@@ -55,8 +55,16 @@ if __name__ == "__main__":
         input_paths.append(sys.argv[i])
 
     # we should make an instance of the class
+    basic_markov = SimpleMarkovGenerator()
 
     # we should call the read_files method with the list of filenames
+    text_string = basic_markov.read_files(input_paths)
+
     # we should call the make_text method 5x
 
-    pass
+    chains_dict = basic_markov.make_chains(text_string)
+
+    for i in range(5):
+        random_text = basic_markov.make_text(chains_dict)
+        print random_text
+        print "\n"
