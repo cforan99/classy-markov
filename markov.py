@@ -8,9 +8,11 @@ class SimpleMarkovGenerator(object):
 
         input_text = ""
 
-        for input_path in file_list:
+        for input_path in filenames:
             file_text = open(input_path).read()
             input_text += " " + file_text
+
+        return input_text
 
 
     def make_chains(self, corpus):
